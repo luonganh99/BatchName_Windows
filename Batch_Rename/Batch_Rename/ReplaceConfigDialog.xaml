@@ -1,0 +1,14 @@
+﻿<Window x:Class="Batch_Rename.ReplaceConfigDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ReplaceConfigDialog" Height="300" Width="300">
+    <Canvas>
+        <Label Canvas.Left="118" Canvas.Top="25" >Config</Label>
+        <Label Canvas.Left="29" Canvas.Top="76">From</Label>
+        <Label Canvas.Left="29" Canvas.Top="124">To</Label>
+        <TextBox Name="fromTextBox"  Height="30" Canvas.Left="89" Canvas.Top="76" Width="183"/>
+        <TextBox Name="toTextBox"  Height="30" Canvas.Left="89" Canvas.Top="124" Width="183"/>
+        <Button Name="btnOk" Width="60" Height="30" Click="btnOk_Click" Canvas.Left="134" Canvas.Top="183">OK</Button>
+        <Button Width="60" Height="30" IsCancel="True" Canvas.Left="212" Canvas.Top="183">Cancel</Button>
+    </Canvas>
+</Window>
