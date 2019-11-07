@@ -35,8 +35,6 @@ namespace Batch_Rename
 
         public abstract StringOperation Clone();
         public abstract void Config();
-
-
     }
 
     public class ReplaceOperation: StringOperation

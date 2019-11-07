@@ -13,3 +13,7 @@ G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\obj\Debug\Batch_Re
 G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\obj\Debug\Batch_Rename.pdb
 G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\obj\Debug\ReplaceConfigDialog.baml
 G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\obj\Debug\ReplaceConfigDialog.g.cs
+G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\bin\Debug\Microsoft.WindowsAPICodePack.dll
+G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\bin\Debug\Microsoft.WindowsAPICodePack.xml
+G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\bin\Debug\Microsoft.WindowsAPICodePack.Shell.xml

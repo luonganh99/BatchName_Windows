@@ -13,8 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using Microsoft.Win32;
 using System.ComponentModel;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
+
 
 
 namespace Batch_Rename
@@ -25,6 +27,7 @@ namespace Batch_Rename
     public partial class MainWindow : Window
     {
         BindingList<FileName> _filenames = new BindingList<FileName>();
+        BindingList<FileName> _foldernames = new BindingList<FileName>();
         BindingList<StringOperation> _actions = new BindingList<StringOperation>();
         List<StringOperation> _prototypes = new List<StringOperation>();
 
@@ -82,8 +85,8 @@ namespace Batch_Rename
             {
                 Args = new ReplaceArgs()
                 {
-                    From = "google",
-                    To = "youtube"
+                    From = "youtube",
+                    To = "google"
                 }
             };
             _prototypes.Add(replacePrototype);
@@ -95,6 +98,7 @@ namespace Batch_Rename
             methodComboBox.ItemsSource = _prototypes;
             methodsListBox.ItemsSource = _actions;
             lvsFilename.ItemsSource = _filenames;
+            lvsFoldername.ItemsSource = _foldernames;
         }
         private void btnAddMethod_Click(object sender, RoutedEventArgs e)
         {
@@ -103,10 +107,26 @@ namespace Batch_Rename
         }
         private void btnAddFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFile = new OpenFileDialog();
-            if (openFile.ShowDialog() == true)
+            CommonOpenFileDialog openFolder = new CommonOpenFileDialog();
+            openFolder.IsFolderPicker = true;
+
+            if (openFolder.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                _filenames.Add(new FileName() { Filename = System.IO.Path.GetFileName(openFile.FileName), Path = openFile.FileName });
+                string[] filePaths = Directory.GetFiles(openFolder.FileName);
+                foreach(string filePath in filePaths)
+                    _filenames.Add(new FileName() { Filename = System.IO.Path.GetFileName(filePath), Path = filePath });
+            }
+        }
+        private void btnAddFolder_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog openFolder = new CommonOpenFileDialog();
+            openFolder.IsFolderPicker = true;
+
+            if (openFolder.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string[] filePaths = Directory.GetDirectories(openFolder.FileName);
+                foreach (string filePath in filePaths)
+                    _foldernames.Add(new FileName() { Filename = System.IO.Path.GetFileName(filePath), Path = filePath });
             }
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -116,17 +136,36 @@ namespace Batch_Rename
         }
         private void btnBatch_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < _filenames.Count(); i++)
+            if (_filenames.Count() >= 0)
             {
-                string final = _filenames[i].Path;
-                for(int j=0; j<_actions.Count(); j++)
+                for (int i = 0; i < _filenames.Count(); i++)
                 {
-                    final = _actions[j].Operate(final);
+                    string final = _filenames[i].Path;
+                    for (int j = 0; j < _actions.Count(); j++)
+                    {
+                        final = _actions[j].Operate(final);
+                    }
+                    System.IO.File.Move(_filenames[i].Path, final);
+                    _filenames[i].Path = final;
+                    _filenames[i].New_Filename = System.IO.Path.GetFileName(final);
                 }
-                System.IO.File.Move(_filenames[i].Path, final);
-                _filenames[i].Path = final;
-                _filenames[i].New_Filename = System.IO.Path.GetFileName(final);
             }
+
+            if (_foldernames.Count() >= 0)
+            {
+                for (int i = 0; i < _foldernames.Count(); i++)
+                {
+                    string final = _foldernames[i].Path;
+                    for (int j = 0; j < _actions.Count(); j++)
+                    {
+                        final = _actions[j].Operate(final);
+                    }
+                    System.IO.Directory.Move(_foldernames[i].Path, final);
+                    _foldernames[i].Path = final;
+                    _foldernames[i].New_Filename = System.IO.Path.GetFileName(final);
+                }
+            }
+           
         }
 
     }
