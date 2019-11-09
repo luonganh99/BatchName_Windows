@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using System.ComponentModel;
-
+using Fluent;
 
 namespace Batch_Rename
 {
@@ -87,8 +87,17 @@ namespace Batch_Rename
                 }
             };
             _prototypes.Add(replacePrototype);
+            var newcasePrototype = new NewCaseOperation()
+            {
+                Args = new NewCaseArgs()
+                {
+                    TypeNewCase = "AllUpCase"
+                }
+            };
+         
+            _prototypes.Add(newcasePrototype);
         }
-
+        
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             createPrototype();
@@ -118,14 +127,15 @@ namespace Batch_Rename
         {
             for (int i = 0; i < _filenames.Count(); i++)
             {
-                string final = _filenames[i].Path;
-                for(int j=0; j<_actions.Count(); j++)
+                string filename= System.IO.Path.GetFileName(_filenames[i].Path);
+                string path = _filenames[i].Path;
+                for (int j=0; j<_actions.Count(); j++)
                 {
-                    final = _actions[j].Operate(final);
+                    filename = _actions[j].Operate(filename);
                 }
-                System.IO.File.Move(_filenames[i].Path, final);
-                _filenames[i].Path = final;
-                _filenames[i].New_Filename = System.IO.Path.GetFileName(final);
+                //System.IO.File.Move(_filenames[i].Path, filename);
+                _filenames[i].Path = path;
+                _filenames[i].New_Filename = filename;
             }
         }
 

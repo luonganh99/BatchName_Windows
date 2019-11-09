@@ -1,0 +1,137 @@
+using Fizzler.Systems.HtmlAgilityPack;
+using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CrawlWeb
+{
+    class Program
+    {
+        class ketqua
+        {
+            public string tengiai { set; get; }
+            public List<string> so=new List<string>();
+
+            
+        }
+        static void Main(string[] args)
+        {
+            //try
+            //{
+            //    string url = "https://ketqua.net";
+            //    // Khoi tao 1 HttpWebRequest
+            //    HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
+            //    // Khoi tao 1 bien res nhan gia tri tra ve tu myReq
+            //    HttpWebResponse myRes = (HttpWebResponse)myReq.GetResponse();
+            //    if (myRes.StatusDescription.ToString().ToUpper() == "OK")
+            //    {
+            //        // Nhan cac dong tin tu server gui ve
+            //        Stream myStream = myRes.GetResponseStream();
+            //        StreamReader Reader = new StreamReader(myStream);
+            //        // Doc cac dong tin gui ve.
+            //        string Result = Reader.ReadToEnd();
+            //        // Doc tu dau den cuoi.
+            //        Console.WriteLine(Result);
+            //    }
+            //    else
+            //        Console.WriteLine("Khong doc duoc");
+            //}
+            //catch
+            //{
+            //    Console.WriteLine("Kiem tra lai ket noi");
+            //}
+            //Console.Read();
+        
+            HtmlWeb htmlweb = new HtmlWeb()
+            {
+                AutoDetectEncoding = false,
+                OverrideEncoding = Encoding.UTF8
+            };
+            HtmlDocument document = htmlweb.Load("https://ketqua.net");
+            var tableresult = document.DocumentNode.QuerySelectorAll("#result_tab_mb tr").ToList();
+            var resultList = new List<ketqua>();
+            int i = 0;
+            string ngay;
+            foreach(var item in tableresult)
+            {
+                if (i==0) ngay = item.QuerySelector("#result_date").InnerText;
+                else
+                {
+                   
+                    var data = new ketqua()
+                    {
+
+                        tengiai = item.QuerySelector("td").InnerText,
+                        
+                        //so = item.QuerySelector($"td #rs_{i}_0").InnerText,
+                    };
+                    if (i > 0) resultList.Add(data);
+                    int n = resultList.Count();
+                    if (n==1 || n==2)
+                    {
+                        string number = item.QuerySelector($"#rs_{i-1}_0").InnerText;
+                        data.so.Add(number);
+                    }
+                    if (n==3)
+                    {
+                        for (int j=0;j<2;j++)
+                        {
+                            string number = item.QuerySelector($"#rs_{i-1}_{j}").InnerText;
+                            data.so.Add(number);
+                        }
+                    }
+                    if (n==4)
+                    {
+                        for (int j = 0; j < 6; j++)
+                        {
+                            string number = item.QuerySelector($"#rs_{i-1}_{j}").InnerText;
+                            data.so.Add(number);
+                        }
+                    }
+                    if(n==5)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            string number = item.QuerySelector($"#rs_{i-1}_{j}").InnerText;
+                            data.so.Add(number);
+                        }
+                    }
+                    if (n==6)
+                    {
+                        for (int j = 0; j < 6; j++)
+                        {
+                            string number = item.QuerySelector($"#rs_{i-1}_{j}").InnerText;
+                            data.so.Add(number);
+                        }
+                    }
+                    if (n==7)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            string number = item.QuerySelector($"#rs_{i-1}_{j}").InnerText;
+                            data.so.Add(number);
+                        }
+                    }
+                    if (n==8)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            string number = item.QuerySelector($"#rs_{i-1}_{j}").InnerText;
+                            data.so.Add(number);
+                        }
+                    }
+                 
+                }
+                i++;
+
+               
+            }
+            
+        }
+    }
+}
