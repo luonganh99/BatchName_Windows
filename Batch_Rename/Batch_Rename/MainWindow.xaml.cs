@@ -1,21 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
-using Microsoft.Win32;
 using System.ComponentModel;
-using Fluent;
+using System.IO;
+using System.Linq;
+using System.Windows;
 
 namespace Batch_Rename
 {
@@ -94,8 +82,12 @@ namespace Batch_Rename
                     TypeNewCase = "AllUpCase"
                 }
             };
-         
             _prototypes.Add(newcasePrototype);
+            var uniquenamePrototype = new UniqueNameOperation();
+            _prototypes.Add(uniquenamePrototype);
+            var movePrototype = new MoveOperation();
+            _prototypes.Add(movePrototype);
+
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -133,12 +125,74 @@ namespace Batch_Rename
                 {
                     filename = _actions[j].Operate(filename);
                 }
-                //System.IO.File.Move(_filenames[i].Path, filename);
+                System.IO.File.Move(_filenames[i].Path, filename);
                 _filenames[i].Path = path;
                 _filenames[i].New_Filename = filename;
             }
         }
 
+        private void BtnpresetLoad_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog loadFileDiaLog = new OpenFileDialog();
+            if (loadFileDiaLog.ShowDialog()==true)
+            {
+              
+                string preset=File.ReadAllText(loadFileDiaLog.FileName);
+                string[] operation = preset.Split('\n');
+                
+                for (int i=0;i<operation.Count()-1;i++)
+                {
+                    string[] typeopera = operation[i].Split(' ');
+                    if (typeopera[0]== "UniqueName")
+                    {
+                        var item = new UniqueNameOperation();
+                        _actions.Add(item);                 
+                    }
+                    else if (typeopera[0]=="NewCase")
+                    {
+                        var item = new NewCaseOperation()
+                        {
+                            Args = new NewCaseArgs()
+                            {
+                                TypeNewCase = typeopera[1]
+                            }
+                        };
+                        _actions.Add(item);
+                    }
+                    else if (typeopera[0]== "Replace")
+                    {
+                        var item = new ReplaceOperation()
+                        {
+                            Args = new ReplaceArgs()
+                            {
+                                From = typeopera[1],
+                                To = typeopera[2]
+                            }
+                        };
+                        _actions.Add(item);
+                    }
+                    else if (typeopera[0]=="Move")
+                    {
+                        var item = new MoveOperation();
+                        _actions.Add(item);
+                    }
+                }
+            }
+        }
+
+        private void BtnpresetSave_Click(object sender, RoutedEventArgs e)
+        {
+            string preset = "";
+            for (int i=0;i<_actions.Count();i++)
+            {
+                preset += _actions[i].Preset()+"\n";
+            }
+            SaveFileDialog saveFileDiaLog = new SaveFileDialog();
+            if (saveFileDiaLog.ShowDialog()==true)
+            {
+                File.WriteAllText(saveFileDiaLog.FileName, preset);
+            }
+        }
     }
 
 }

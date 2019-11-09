@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -27,7 +28,7 @@ namespace Batch_Rename
         public string From { get; set; }
         public string To { get; set; }
 
-       
+
     }
 
     //public class NewCaseArgs : StringArgs
@@ -35,11 +36,12 @@ namespace Batch_Rename
     //    public string From { get; set; }
     //}
 
-    public abstract class StringOperation:INotifyPropertyChanged
+    public abstract class StringOperation : INotifyPropertyChanged
     {
         public StringArgs Args { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public abstract string Preset();
 
         public abstract string Operate(string origin);
 
@@ -48,13 +50,18 @@ namespace Batch_Rename
 
         public abstract StringOperation Clone();
         public abstract void Config();
-       
 
 
-}
+
+    }
 
     public class ReplaceOperation : StringOperation
     {
+        public override string Preset()
+        {
+            var args = Args as ReplaceArgs;
+            return $"Replace {args.From} {args.To}";
+        }
         public override string Operate(string origin)
         {
             var args = Args as ReplaceArgs;
@@ -98,7 +105,7 @@ namespace Batch_Rename
             var screen = new ReplaceConfigDialog(Args);
             if (screen.ShowDialog() == true)
             {
-                
+
             }
         }
         //public event PropertyChangedEventHandler PropertyChanged;
@@ -115,12 +122,17 @@ namespace Batch_Rename
 
     public class NewCaseOperation : StringOperation, INotifyPropertyChanged
     {
+        public override string Preset()
+        {
+            var args = Args as NewCaseArgs;
+            return $"NewCase {args.TypeNewCase}";
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public override string Operate(string origin)
         {
             var filename = System.IO.Path.GetFileName(origin);
-            
+
             var args = Args as NewCaseArgs;
             string result;
             if (args.TypeNewCase == "AllUpCase")
@@ -157,16 +169,16 @@ namespace Batch_Rename
 
                 }
                 return result.Trim();
-              
-               
+
+
             }
         }
-        
+
         public override string Name
         {
             get
             {
-              
+
                 return "New Case";
             }
         }
@@ -200,5 +212,126 @@ namespace Batch_Rename
             }
         }
 
+    }
+    public class UniqueNameOperation : StringOperation, INotifyPropertyChanged
+    {
+        public override string Preset()
+        {
+            
+            return $"UniqueName";
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public override string Operate(string origin)
+        {
+          
+            try
+            {
+                string tail="";
+                for (int i = origin.Length - 1; i >= 0; i--)
+                {
+                    if (origin[i] == '.')
+                    {
+                        tail = origin.Substring(i , origin.Length-i );
+                        break;
+                    }
+                }
+                System.Guid newGuid = Guid.NewGuid();
+               
+                return newGuid.ToString("D")+ tail;
+            }
+            catch (Exception ex)
+            {
+
+                return origin;
+            }
+
+        }
+        public override string Name
+        {
+            get
+            {
+
+                return "Unique Name";
+            }
+        }
+        public override string Description
+        {
+            get
+            {
+
+                return $"Replate Name File to Guild";
+            }
+
+        }
+        public override StringOperation Clone()
+        {
+
+            return new UniqueNameOperation();
+           
+        }
+        public override void Config()
+        {
+
+        }
+    }
+    public class MoveOperation  : StringOperation
+    {
+        public override string Preset()
+        {
+
+            return "Move";
+        }
+       
+        public override string Operate(string origin)
+        {
+            string tail = "";
+            for (int i = origin.Length - 1; i >= 0; i--)
+            {
+                if (origin[i] == '.')
+                {
+                    tail = origin.Substring(i, origin.Length - i);
+                    break;
+                }
+            }
+            string ISBN="";
+            int postISBN=0;
+            string regexISBN = @"(\d|-){13}";
+            Match match = Regex.Match(origin, regexISBN);         
+            ISBN = match.Value;
+            postISBN = match.Index;
+
+            if (postISBN == 0) return (origin.Substring(13, origin.Length - 13 - tail.Length) + ISBN + tail);
+            else return (ISBN + origin.Substring(0, origin.Length - 13 - tail.Length)+tail) ;
+
+            
+          
+        }
+        public override string Name
+        {
+            get
+            {
+
+                return "Move";
+            }
+        }
+        public override string Description
+        {
+            get
+            {
+
+                return $"Move ISBN - NameFile";
+            }
+
+        }
+        public override StringOperation Clone()
+        {
+
+            return new MoveOperation();
+
+        }
+        public override void Config()
+        {
+
+        }
     }
 }

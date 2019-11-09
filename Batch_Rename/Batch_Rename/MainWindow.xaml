@@ -12,7 +12,8 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <Button Name="btnAddMethod" Click="btnAddMethod_Click" Height="20" Width="100" RenderTransformOrigin="1.2,3.31" Canvas.Top="78" Canvas.Left="10" >Add Method</Button>
-
+        <Button Name="btnpresetLoad" Click="BtnpresetLoad_Click"  Height="20" Width="68" Content="Load Preset" Canvas.Left="190" Canvas.Top="78"></Button>
+        <Button Name="btnpresetSave" Click="BtnpresetSave_Click"  Height="20" Width="68" Content="Save Preset" Canvas.Left="263" Canvas.Top="78"></Button>
         <ListBox Name="methodsListBox" Width="284" Height="467" Canvas.Left="10" Canvas.Top="103">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -42,7 +43,7 @@
         </ListView>
     </Canvas>
 </Window>
-    
+
 <!--<Fluent:RibbonWindow x:Class="MyFirstRibbonProject.MyFirstWindow"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

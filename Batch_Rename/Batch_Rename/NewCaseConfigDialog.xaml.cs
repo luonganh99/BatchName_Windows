@@ -78,7 +78,8 @@ namespace Batch_Rename
 
         private void NewcasebtnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = true;
+            Close();
         }
     }
 }
