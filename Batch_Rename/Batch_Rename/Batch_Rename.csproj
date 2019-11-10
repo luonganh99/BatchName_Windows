@@ -62,10 +62,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewCaseConfigDialog.xaml.cs">
+      <DependentUpon>NewCaseConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PreviewScreen.xaml.cs">
+      <DependentUpon>PreviewScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReplaceConfigDialog.xaml.cs">
       <DependentUpon>ReplaceConfigDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="StringOperation.cs" />
+    <Page Include="ErrorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +91,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewCaseConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PreviewScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ReplaceConfigDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +131,50 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\delete.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\doubledown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\doubleup.jpg" />
+    <Resource Include="imgs\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\loadpreset.png" />
+    <Resource Include="imgs\savepreset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\warning.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 G:\My Study\Windows\Project1\Source\Batch_Rename\Batch_Rename\App.xaml
-2-1415900482
+5806819800
 
-11-1148046975
+14-96716202
 14548996572
-MainWindow.xaml;ReplaceConfigDialog.xaml;
+ErrorDialog.xaml;MainWindow.xaml;NewCaseConfigDialog.xaml;PreviewScreen.xaml;ReplaceConfigDialog.xaml;
 
 False
 
