@@ -199,8 +199,13 @@ namespace Batch_Rename
                     {
                         string final = _filenames[i].Filename;
                         for (int j = 0; j < _actions.Count(); j++)
-                        {
-                            final = _actions[j].Operate(final);                         
+                        {                     
+                            final = _actions[j].Operate(final);   
+                            if (final== "Name file isn't correct")
+                            {
+                                MessageBox.Show(final);
+                                return;
+                            }
                         }
                       
                         newFilenames.Add(new FileName() { Filename = _filenames[i].Filename, New_Filename = final, Path = _filenames[i].Path.Replace(_filenames[i].Filename, final) });

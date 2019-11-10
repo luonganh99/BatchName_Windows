@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using System.Windows;
 
 namespace Batch_Rename
 {
@@ -350,24 +350,33 @@ namespace Batch_Rename
         public event PropertyChangedEventHandler PropertyChanged;
         public override string Operate(string origin)
         {
-            string tail = "";
-            for (int i = origin.Length - 1; i >= 0; i--)
+            try
             {
-                if (origin[i] == '.')
+                string tail = "";
+                for (int i = origin.Length - 1; i >= 0; i--)
                 {
-                    tail = origin.Substring(i, origin.Length - i);
-                    break;
+                    if (origin[i] == '.')
+                    {
+                        tail = origin.Substring(i, origin.Length - i);
+                        break;
+                    }
                 }
-            }
-            string ISBN="";
-            int postISBN=0;
-            string regexISBN = @"(\d|-){13}";
-            Match match = Regex.Match(origin, regexISBN);         
-            ISBN = match.Value;
-            postISBN = match.Index;
+                string ISBN = "";
+                int postISBN = 0;
+                string regexISBN = @"(\d|-){13}";
+                Match match = Regex.Match(origin, regexISBN);
+                ISBN = match.Value;
+                postISBN = match.Index;
 
-            if (postISBN == 0) return (origin.Substring(13, origin.Length - 13 - tail.Length) + ISBN + tail);
-            else return (ISBN + origin.Substring(0, origin.Length - 13 - tail.Length)+tail) ;
+                if (postISBN == 0) return (origin.Substring(13, origin.Length - 13 - tail.Length) + ISBN + tail);
+                else return (ISBN + origin.Substring(0, origin.Length - 13 - tail.Length) + tail);
+            }
+            catch
+            {
+                
+                return "Name file isn't correct";
+            }
+           
         }
         public override string Name
         {
