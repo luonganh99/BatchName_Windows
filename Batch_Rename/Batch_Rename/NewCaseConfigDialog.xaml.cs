@@ -24,7 +24,7 @@ namespace Batch_Rename
         BindingList<StringArgs> newCase = new BindingList<StringArgs>();
         public NewCaseConfigDialog(StringArgs args)
         {
-            
+
             InitializeComponent();
             myArgs = args as NewCaseArgs;
 
@@ -41,7 +41,7 @@ namespace Batch_Rename
 
 
             };
-           
+
             newCase.Add(item1);
 
             var item2 = new NewCaseArgs
@@ -50,7 +50,7 @@ namespace Batch_Rename
                 TypeNewCase = "AllLowCase"
 
             };
-            
+
             newCase.Add(item2);
             var item3 = new NewCaseArgs()
             {
@@ -66,7 +66,7 @@ namespace Batch_Rename
         {
             createCase();
             newcaseComboBox.ItemsSource = newCase;
-           
+
         }
 
         private void NewcasebtnOk_Click(object sender, RoutedEventArgs e)
@@ -78,7 +78,7 @@ namespace Batch_Rename
 
         private void NewcasebtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            DialogResult = false;
             Close();
         }
     }

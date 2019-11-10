@@ -1,0 +1,11 @@
+﻿<Window x:Class="Batch_Rename.ErrorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ErrorDialog" Height="220" Width="420">
+    <Canvas Height="203" Margin="0,0,-0.4,0" VerticalAlignment="Top">
+        <Image Width="42" Height="42" Source="/imgs/error.png" Canvas.Left="10" Canvas.Top="10" RenderTransformOrigin="0.443,0.864"></Image>
+        <TextBlock TextWrapping="Wrap"  Name="txtError" Width="334" FontSize="20" Foreground="#FF2666DE" Canvas.Left="70" Canvas.Top="17" Height="72" ></TextBlock>
+        <TextBlock Name="txtFix" Width="300" Canvas.Left="70" Canvas.Top="89" FontFamily="Segoe UI Semibold"></TextBlock>
+        <Button Name="btnClose" Click="btnClose_Click" Canvas.Left="312" Canvas.Top="140" Height="33" Width="79" FontFamily="Segoe WP Semibold" FontSize="14">Close</Button>
+    </Canvas>
+</Window>

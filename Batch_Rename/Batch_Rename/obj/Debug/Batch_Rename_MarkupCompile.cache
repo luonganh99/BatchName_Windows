@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\WPF\BatchName_Windows\Batch_Rename\Batch_Rename\obj\Debug\
+C:\Users\Sac Phan\Desktop\BatchName_Windows-master\Batch_Rename\Batch_Rename\obj\Debug\
 Batch_Rename
 none
 false
 DEBUG;TRACE
-E:\WPF\BatchName_Windows\Batch_Rename\Batch_Rename\App.xaml
-3-1981057163
+C:\Users\Sac Phan\Desktop\BatchName_Windows-master\Batch_Rename\Batch_Rename\App.xaml
+5806819800
 
-8-225030908
-18-53495083
-MainWindow.xaml;NewCaseConfigDialog.xaml;ReplaceConfigDialog.xaml;
+10-1619639011
+14-1430769592
+ErrorDialog.xaml;MainWindow.xaml;NewCaseConfigDialog.xaml;PreviewScreen.xaml;ReplaceConfigDialog.xaml;
 
 False
 
